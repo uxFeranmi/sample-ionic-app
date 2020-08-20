@@ -1,5 +1,5 @@
 name: Build project and run Lighthouse CI
-on: [push]
+on: [pull_request]
 jobs:
   lhci:
     name: Lighthouse CI
@@ -13,8 +13,20 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: run Lighthouse CI
+      #- name: Build
+        #run: |
+          #npm run build
+      - name: Waiting for 200 from the Netlify Preview
+        uses: jakepartusch/wait-for-netlify-action@v1
+        id: waitFor200
+        with:
+          site_name: "inspiring-wozniak-54afa7"
+      - name: Lighthouse CI
         run: |
           npm install -g @lhci/cli@0.3.x
-          npm run build
-          lhci autorun --upload.target=temporary-public-storage || echo "LHCI failed!"
+          lhci autorun --upload.target=temporary-public-storage --collect.staticDistDir=./ \
+            --collect.url=${{ steps.waitFor200.outputs.url }} \
+            --collect.url=${{ steps.waitFor200.outputs.url }}/tabs/tab2 \
+            || echo "LHCI failed!"
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
