@@ -34,12 +34,11 @@ jobs:
         if: steps.wait-for-build.outputs.conclusion == 'success'
         run: |
           npm install -g @lhci/cli@0.3.x
-          npm run audit:ci \
-            --collect.url=${{ steps.waitFor200.outputs.url }} \
-            --collect.url=${{ steps.waitFor200.outputs.url }}/tabs/tab2 \
-            || echo "LHCI failed!"
+          npm run audit:ci --collect.url=$URL_1 --collect.url=$URL_2 || echo "LHCI failed!"
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+          URL_1: ${{ steps.waitFor200.outputs.url }}
+          URL_2: ${{ steps.waitFor200.outputs.url }}/tabs/tab2
 
       - name: Netlify build not successful
         if: steps.wait-for-build.outputs.conclusion != 'success'
