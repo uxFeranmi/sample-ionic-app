@@ -34,7 +34,8 @@ jobs:
         if: steps.wait-for-build.outputs.conclusion == 'success'
         run: |
           npm install -g @lhci/cli@0.3.x
-          npm run audit:ci --collect.url=$URL_1 --collect.url=$URL_2 || echo "LHCI failed!"
+          echo "URLs: $URL_1 $URL_2"
+          lhci autorun --config=./lighthouserc.ci.js --collect.url=$URL_1 --collect.url=$URL_2 || echo "LHCI failed!"
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
           URL_1: ${{ steps.waitFor200.outputs.url }}
