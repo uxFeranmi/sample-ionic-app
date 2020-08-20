@@ -20,3 +20,8 @@ module.exports = {
 		},
 	},
 };
+
+/* Store the token as LHCI_GITHUB_APP_TOKEN in your build environment.
+
+bV32DSmicFvUPcq:11347526:xAUKYWBSv
+*/
