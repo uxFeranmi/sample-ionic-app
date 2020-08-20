@@ -6,27 +6,42 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+
       - name: Use Node.js 10.x
         uses: actions/setup-node@v1
         with:
           node-version: 10.x
+
       - name: npm install
         run: |
           npm install
-      #- name: Build
-        #run: |
-          #npm run build
+
       - name: Waiting for 200 from the Netlify Preview
         uses: jakepartusch/wait-for-netlify-action@v1
         id: waitFor200
         with:
           site_name: "inspiring-wozniak-54afa7"
+
+      - name: Wait for Netlify build to succeed
+        uses: fountainhead/action-wait-for-check@v1.0.0
+        id: wait-for-build
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          checkName: netlify/inspiring-wozniak-54afa7/deploy-preview
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
       - name: Lighthouse CI
+        if: steps.wait-for-build.outputs.conclusion == 'success'
         run: |
           npm install -g @lhci/cli@0.3.x
-          lhci autorun --upload.target=temporary-public-storage --collect.staticDistDir=./ \
+          npm run audit:ci \
             --collect.url=${{ steps.waitFor200.outputs.url }} \
             --collect.url=${{ steps.waitFor200.outputs.url }}/tabs/tab2 \
             || echo "LHCI failed!"
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+      - name: Netlify build not successful
+        if: steps.wait-for-build.outputs.conclusion != 'success'
+        run: |
+          echo "Netlify build not successful 😢."

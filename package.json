@@ -10,7 +10,8 @@
     "start:android": "ionic cordova run android -l",
     "build": "ng build --prod",
     "test": "ng test",
-    "audit": "npm run build && lhci autorun"
+    "audit:local": "npm run build && lhci autorun",
+    "audit:ci": "lhci autorun --config=./lighthouserc.ci.js"
   },
   "private": true,
   "dependencies": {

@@ -1,10 +1,9 @@
 module.exports = {
 	ci: {
 		collect: {
-			staticDistDir: './www',
-			url: ['http://localhost', 'http://localhost/tabs/tab2'],
-			numberOfRuns: 3,
-			isSinglePageApplication: true
+			startServerCommand: 'npx http-server',
+			startServerReadyPattern: "listen|ready|server\srunning",
+			numberOfRuns: 3
 		},
 		assert: {
 		  assertions: {
