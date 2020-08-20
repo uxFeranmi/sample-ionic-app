@@ -2,8 +2,9 @@ module.exports = {
 	ci: {
 		collect: {
 			startServerCommand: 'npx http-server',
-			startServerReadyPattern: "listen|ready|server\srunning",
-			numberOfRuns: 3
+			startServerReadyPattern: "Available",
+            numberOfRuns: 3,
+			startServerReadyTimeout: 10000,
 		},
 		assert: {
 		  assertions: {

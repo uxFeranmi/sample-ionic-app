@@ -2,10 +2,42 @@
   {
     "name": "minScore",
     "expected": 1,
+    "actual": 0.82,
+    "values": [
+      0.82,
+      0.8,
+      0.77
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "performance",
+    "auditId": "categories",
+    "level": "error",
+    "url": "https://inspiring-wozniak-54afa7.netlify.app/"
+  },
+  {
+    "name": "minScore",
+    "expected": 1,
+    "actual": 0.89,
+    "values": [
+      0.89,
+      0.89,
+      0.89
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "accessibility",
+    "auditId": "categories",
+    "level": "warn",
+    "url": "https://inspiring-wozniak-54afa7.netlify.app/"
+  },
+  {
+    "name": "minScore",
+    "expected": 1,
     "actual": 0.91,
     "values": [
+      0.89,
       0.9,
-      0.91,
       0.91
     ],
     "operator": ">=",
@@ -13,7 +45,7 @@
     "auditProperty": "performance",
     "auditId": "categories",
     "level": "error",
-    "url": "http://localhost:60716/"
+    "url": "https://inspiring-wozniak-54afa7.netlify.app/tabs/tab2"
   },
   {
     "name": "minScore",
@@ -29,38 +61,6 @@
     "auditProperty": "accessibility",
     "auditId": "categories",
     "level": "warn",
-    "url": "http://localhost:60716/"
-  },
-  {
-    "name": "minScore",
-    "expected": 1,
-    "actual": 0.91,
-    "values": [
-      0.91,
-      0.91,
-      0.89
-    ],
-    "operator": ">=",
-    "passed": false,
-    "auditProperty": "performance",
-    "auditId": "categories",
-    "level": "error",
-    "url": "http://localhost:60716/tabs/tab2"
-  },
-  {
-    "name": "minScore",
-    "expected": 1,
-    "actual": 0.89,
-    "values": [
-      0.89,
-      0.89,
-      0.89
-    ],
-    "operator": ">=",
-    "passed": false,
-    "auditProperty": "accessibility",
-    "auditId": "categories",
-    "level": "warn",
-    "url": "http://localhost:60716/tabs/tab2"
+    "url": "https://inspiring-wozniak-54afa7.netlify.app/tabs/tab2"
   }
 ]
