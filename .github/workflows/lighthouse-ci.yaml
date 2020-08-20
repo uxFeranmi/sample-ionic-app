@@ -30,11 +30,12 @@ jobs:
           npm install -g @lhci/cli@0.3.x
           echo "URLs: $URL_1 $URL_2"
           echo "HOST: $HOST | SITE_NAME: ${{env.SITE_NAME}}"
+          echo "--collect.url=$URL_2"
           lhci autorun --config=./lighthouserc.ci.js --collect.url=$URL_1 --collect.url=$URL_2 || echo "LHCI failed!"
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
           SITE_NAME: "inspiring-wozniak-54afa7"
-          HOST: https://deploy-preview-${{github.event.pull_request.number}}--${{env.SITE_NAME}}.netlify.app
+          HOST: "https://deploy-preview-${{github.event.pull_request.number}}--${{env.SITE_NAME}}.netlify.app"
           URL_1: ${{env.HOST}}
           URL_2: ${{env.HOST}}/tabs/tab2
 
