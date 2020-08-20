@@ -27,7 +27,7 @@ jobs:
         id: wait-for-build
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          checkName: netlify/inspiring-wozniak-54afa7/deploy-preview
+          checkName: Redirect rules - inspiring-wozniak-54afa7
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
 
       - name: Lighthouse CI
