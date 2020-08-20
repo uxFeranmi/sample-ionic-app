@@ -1,0 +1,4 @@
+{
+  "http://localhost:60716/": "https://googlechrome.github.io/lighthouse-ci/viewer/?baseReport=https%3A%2F%2Fstorage.googleapis.com%2Flighthouse-infrastructure.appspot.com%2Freports%2F1597907286690-68356.report.html&compareReport=https%3A%2F%2Fstorage.googleapis.com%2Flighthouse-infrastructure.appspot.com%2Freports%2F1597908179675-65335.report.html",
+  "http://localhost:60716/tabs/tab2": "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1597908183614-89113.report.html"
+}
