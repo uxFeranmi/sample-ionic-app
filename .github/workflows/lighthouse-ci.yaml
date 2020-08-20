@@ -16,12 +16,6 @@ jobs:
         run: |
           npm install
 
-      - name: Waiting for 200 from the Netlify Preview
-        uses: jakepartusch/wait-for-netlify-action@v1
-        id: waitFor200
-        with:
-          site_name: "inspiring-wozniak-54afa7"
-
       - name: Wait for Netlify build to succeed
         uses: fountainhead/action-wait-for-check@v1.0.0
         id: wait-for-build
@@ -35,11 +29,14 @@ jobs:
         run: |
           npm install -g @lhci/cli@0.3.x
           echo "URLs: $URL_1 $URL_2"
+          echo "HOST: $HOST | SITE_NAME: ${{env.SITE_NAME}}"
           lhci autorun --config=./lighthouserc.ci.js --collect.url=$URL_1 --collect.url=$URL_2 || echo "LHCI failed!"
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-          URL_1: ${{ steps.waitFor200.outputs.url }}
-          URL_2: ${{ steps.waitFor200.outputs.url }}/tabs/tab2
+          SITE_NAME: "inspiring-wozniak-54afa7"
+          HOST: https://deploy-preview-${{github.event.pull_request.number}}--${{env.SITE_NAME}}.netlify.app
+          URL_1: $HOST
+          URL_2: $HOST/tabs/tab2
 
       - name: Netlify build not successful
         if: steps.wait-for-build.outputs.conclusion != 'success'
