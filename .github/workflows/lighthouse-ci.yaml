@@ -35,8 +35,8 @@ jobs:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
           SITE_NAME: "inspiring-wozniak-54afa7"
           HOST: https://deploy-preview-${{github.event.pull_request.number}}--${{env.SITE_NAME}}.netlify.app
-          URL_1: $HOST
-          URL_2: $HOST/tabs/tab2
+          URL_1: ${{env.HOST}}
+          URL_2: ${{env.HOST}}/tabs/tab2
 
       - name: Netlify build not successful
         if: steps.wait-for-build.outputs.conclusion != 'success'
