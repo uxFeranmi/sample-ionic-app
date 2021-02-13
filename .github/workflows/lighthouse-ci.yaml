@@ -1,19 +1,44 @@
 name: Build project and run Lighthouse CI
-on: [push]
+on: [pull_request]
 jobs:
   lhci:
     name: Lighthouse CI
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+
       - name: Use Node.js 10.x
         uses: actions/setup-node@v1
         with:
           node-version: 10.x
+
       - name: npm install
         run: |
           npm install
-      - name: run Lighthouse CI
+
+      - name: Wait for Netlify build to succeed
+        uses: fountainhead/action-wait-for-check@v1.0.0
+        id: wait-for-build
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          checkName: Redirect rules - inspiring-wozniak-54afa7
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
+      - name: Lighthouse CI
+        if: steps.wait-for-build.outputs.conclusion == 'success'
         run: |
           npm install -g @lhci/cli@0.3.x
-          lhci autorun --upload.target=temporary-public-storage || echo "LHCI failed!"
+          echo "HOST: $HOST_NAME"
+          echo "--collect.url=${{env.HOST_NAME}}/tabs/tab2"
+          lhci autorun --config=./lighthouserc.ci.js \
+            --collect.url=${{env.HOST_NAME}} \
+            --collect.url=${{env.HOST_NAME}}/tabs/tab2 \
+            || echo "LHCI failed!"
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+          HOST_NAME: "https://deploy-preview-${{github.event.pull_request.number}}--inspiring-wozniak-54afa7.netlify.app"
+
+      - name: Netlify build not successful 😢
+        if: steps.wait-for-build.outputs.conclusion != 'success'
+        run: |
+          echo "Netlify build not successful 😢.."
