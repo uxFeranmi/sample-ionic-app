@@ -41,4 +41,4 @@ jobs:
       - name: Netlify build not successful 😢
         if: steps.wait-for-build.outputs.conclusion != 'success'
         run: |
-          echo "Netlify build not successful 😢."
+          echo "Netlify build not successful 😢.."
